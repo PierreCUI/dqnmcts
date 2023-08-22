@@ -12,14 +12,13 @@ coloredlogs.install(level='INFO')
 
 args = {
     'numIters': 1000,
-    'numMCTSSims': 15,
     'tempThreshold': 60,
 
-    'arenaCompare': 10,
+    'arenaCompare': 20,
     'updateThreshold': 0.6,
 
     'maxlenOfQueue': 10000,
-    'numItersForTrainExamplesHistory': 4,
+    'numItersForTrainExamplesHistory': 16,
 
     'cpuct': 1.0,
     'stepforce': 0.01,
@@ -29,8 +28,8 @@ args = {
     'loadFile': ('best.pth.tar', -1),
     'skipFirst': False,
 
-    'nJobs': 4,
-    'nRuns': 4,
+    'nJobs': -1,
+    'nRuns': 8,
 }
 
 

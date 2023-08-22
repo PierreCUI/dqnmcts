@@ -109,7 +109,7 @@ class Coach:
             pwins, nwins, step = arena.playGames()
             log.info('NEW/PREV WINS, STEPS : %d / %d / %d' % (nwins, pwins, step))
 
-            if nwins / (pwins + nwins) >= self.args["updateThreshold"] or nwins / (pwins + nwins) >= 0.5 and step < self.curstep * 0.9:
+            if nwins / (pwins + nwins) > self.args["updateThreshold"] or nwins / (pwins + nwins) > 0.5 and step < self.curstep * 0.9:
                 log.info('ACCEPTING NEW MODEL')
                 self.curstep = step
                 self.nnet.save_checkpoint(folder=self.args["checkpoint"], filename=self.getCheckpointFile(i))
