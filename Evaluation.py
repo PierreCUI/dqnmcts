@@ -37,7 +37,7 @@ def flatten_list(lst):
 def multi_to_single_index(position, shape):
     index = 0
     multiplier = 1
-    for i in range(len(shape)-1, -1, -1):
+    for i in range(len(shape) - 1, -1, -1):
         index += position[i] * multiplier
         multiplier *= shape[i]
     return index

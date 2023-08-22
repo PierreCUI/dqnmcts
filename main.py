@@ -14,7 +14,7 @@ args = {
     'numIters': 1000,
     'tempThreshold': 60,
 
-    'arenaCompare': 24,
+    'arenaCompare': 20,
     'updateThreshold': 0.6,
 
     'maxlenOfQueue': 10000,
