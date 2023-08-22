@@ -14,11 +14,11 @@ args = {
     'numIters': 1000,
     'tempThreshold': 60,
 
-    'arenaCompare': 20,
+    'arenaCompare': 24,
     'updateThreshold': 0.6,
 
     'maxlenOfQueue': 10000,
-    'numItersForTrainExamplesHistory': 16,
+    'numItersForTrainExamplesHistory': 20,
 
     'cpuct': 1.0,
     'stepforce': 0.01,
@@ -29,7 +29,7 @@ args = {
     'skipFirst': False,
 
     'nJobs': -1,
-    'nRuns': 8,
+    'nRuns': 10,
 }
 
 

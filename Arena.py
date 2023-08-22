@@ -3,7 +3,14 @@ import logging
 import copy
 import numpy as np
 
+from joblib import Parallel, delayed
+
 log = logging.getLogger(__name__)
+
+args = {
+    'nJobs': -1,
+    'nRuns': 10,
+}
 
 
 class Arena:
@@ -57,34 +64,30 @@ class Arena:
 
         results = []
         while len(results) < self.compareTimes // 2:
-            player1 = copy.deepcopy(self.playerOld)
-            player2 = copy.deepcopy(self.playerNew)
             board = self.game.getInitBoard()
+            result = Parallel(n_jobs=args["nJobs"])(delayed(self.playGame)(copy.deepcopy(self.playerOld), copy.deepcopy(self.playerNew), copy.deepcopy(board)) for _ in range(args["nRuns"]))
 
-            r, s = self.playGame(player1, player2, board)
-
-            results.append(r)
-            log.info(f'Part I Game Number: {len(results)}, Game End: {r}')
-            if r == 1:
-                oldPlayerWin += 1
-            elif r == -1:
-                newPlayerWin += 1
-            step += s
+            for r, s in result:
+                results.append(r)
+                log.info(f'Part I Game Number: {len(results)}, Game End: {r}')
+                if r == 1:
+                    oldPlayerWin += 1
+                elif r == -1:
+                    newPlayerWin += 1
+                step += s
 
         results = []
         while len(results) < self.compareTimes // 2:
-            player1 = copy.deepcopy(self.playerNew)
-            player2 = copy.deepcopy(self.playerOld)
             board = self.game.getInitBoard()
+            result = Parallel(n_jobs=args["nJobs"])(delayed(self.playGame)(copy.deepcopy(self.playerNew), copy.deepcopy(self.playerOld), copy.deepcopy(board)) for _ in range(args["nRuns"]))
 
-            r, s = self.playGame(player1, player2, board)
-
-            results.append(r)
-            log.info(f'Part II Game Number: {len(results)}, Game End: {r}')
-            if r == 1:
-                newPlayerWin += 1
-            elif r == -1:
-                oldPlayerWin += 1
-            step += s
+            for r, s in result:
+                results.append(r)
+                log.info(f'Part II Game Number: {len(results)}, Game End: {r}')
+                if r == 1:
+                    newPlayerWin += 1
+                elif r == -1:
+                    oldPlayerWin += 1
+                step += s
 
         return oldPlayerWin, newPlayerWin, step
