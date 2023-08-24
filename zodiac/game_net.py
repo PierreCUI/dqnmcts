@@ -126,4 +126,5 @@ class Net:
             return False
         checkpoint = torch.load(filepath, map_location=None if torch.cuda.is_available() else 'cpu')
         self.nnet.load_state_dict(checkpoint['state_dict'])
+        log.info("Model Loaded.")
         return True

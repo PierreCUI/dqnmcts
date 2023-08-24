@@ -15,7 +15,7 @@ args = {
     'stepforce': 0.01,
 
     'checkpoint': './temp/',
-    'loadFile': ('best.pth.tar', -1),
+    'loadFile': 'best.pth.tar',
 }
 
 
@@ -107,8 +107,8 @@ def main():
     log.info('Loading %s...', nn.__name__)
     nnet = nn(game)
 
-    log.info('Loading checkpoint "%s/%s"...', args["checkpoint"], args["loadFile"][0])
-    if not nnet.load_checkpoint(args["checkpoint"], args["loadFile"][0]):
+    log.info('Loading checkpoint "%s/%s"...', args["checkpoint"], args["loadFile"])
+    if not nnet.load_checkpoint(args["checkpoint"], args["loadFile"]):
         exit(-1)
     computerPlayer = MCTS(game, nnet, args)
 

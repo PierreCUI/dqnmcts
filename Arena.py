@@ -50,7 +50,7 @@ class Arena:
             else:
                 log.info(f'Arena No Action: {step}')
                 cur_player = 2 if cur_player == 1 else 1
-                board, curActedState = self.game.getCanonicalForm(board)
+                board = self.game.getCanonicalForm(board)
                 break
 
         return self.playGame(player2, player1, board, considered_states, step, cur_player)
