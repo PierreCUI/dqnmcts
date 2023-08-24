@@ -199,7 +199,7 @@ class Unit:
         action = action % (board.shape[0] * board.shape[1])
         target_position = [action // board.shape[1], action % board.shape[1]]
 
-        log.info(f"name: {self.info['name']}, player: {self.info['id']}, action_type: {action_type}, target_position: {target_position}")
+        # log.info(f"name: {self.info['name']}, player: {self.info['id']}, action_type: {action_type}, target_position: {target_position}")
 
         if action_type in ActionType.MOVE.value:
             self.skill["move"]["cd"] = self.skill["move"]["max_cd"]

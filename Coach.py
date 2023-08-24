@@ -13,6 +13,7 @@ from joblib import Parallel, delayed
 from Arena import Arena
 from MCTS import MCTS
 
+logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__name__)
 
 
@@ -27,7 +28,7 @@ class Coach:
         self.curstep = float("inf")
         self.skipFirst = self.args["skipFirst"]
 
-    def executeEpisode(self):
+    def executeEpisode(self, mcts):
         canonical_board = self.game.getInitBoard()
         canonical_board_state = self.game.getState(canonical_board)
         s = self.game.stringRepresentation(canonical_board_state)
@@ -46,7 +47,7 @@ class Coach:
 
             temp = int(episode_step < self.args["tempThreshold"])
             log.info(f'Deduction: {episode_step}')
-            pi = np.array(self.mcts.getActionProb(canonical_board, considered_states, temp, cur_player, episode_step))
+            pi = np.array(mcts.getActionProb(canonical_board, considered_states, temp, cur_player, episode_step))
             sym = copy.deepcopy(self.game.getSymmetries(canonical_board, pi))
             for b, p in sym:
                 trainExamples.append([self.game.getState(b), p, cur_player])
@@ -77,7 +78,7 @@ class Coach:
             if not self.skipFirst:
                 while len(iterationTrainExamples) < self.args["maxlenOfQueue"]:
                     self.mcts = MCTS(self.game, self.nnet, self.args)
-                    results = Parallel(n_jobs=self.args["nJobs"])(delayed(self.executeEpisode)() for _ in range(self.args["nRuns"]))
+                    results = Parallel(n_jobs=self.args["nJobs"])(delayed(self.executeEpisode)(copy.deepcopy(self.mcts)) for _ in range(self.args["nRuns"]))
                     iterationTrainExamples += [item for sublist in results for item in sublist]
                     del results
                     log.info(f'len(iterationTrainExamples) = {len(iterationTrainExamples)}')
