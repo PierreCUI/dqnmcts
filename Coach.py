@@ -13,7 +13,6 @@ from joblib import Parallel, delayed
 from Arena import Arena
 from MCTS import MCTS
 
-logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__name__)
 
 

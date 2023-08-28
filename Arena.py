@@ -24,11 +24,6 @@ class Arena:
         if considered_states is None:
             considered_states = []
 
-        r = self.game.getGameEnded(board)
-        if r != 0:
-            log.info(f'Game End Steps: {step}')
-            return r * (-1) ** (cur_player != 1), step
-
         while True:
             r = self.game.getGameEnded(board)
             if r != 0:
@@ -51,9 +46,7 @@ class Arena:
                 log.info(f'Arena No Action: {step}')
                 cur_player = 2 if cur_player == 1 else 1
                 board = self.game.getCanonicalForm(board)
-                break
-
-        return self.playGame(player2, player1, board, considered_states, step, cur_player)
+                player1, player2 = player2, player1
 
     def playGames(self):
         log.info(f'Arena Play')
